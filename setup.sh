@@ -180,6 +180,9 @@ if [ "$WORDPRESS_INSTALLED" = false ]; then
 
     log_info "Database is ready"
 
+    echo "DEBUG: DATABASE_CONTAINER = '$DATABASE_CONTAINER'"
+    echo "DEBUG: MYSQL_ROOT_PASSWORD = '$MYSQL_ROOT_PASSWORD'"
+
     # Wait a bit longer for MySQL to be fully initialized
     log_info "Waiting for MySQL to be fully ready..."
     sleep 10
