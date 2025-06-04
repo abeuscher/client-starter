@@ -90,11 +90,21 @@ log_info "Environment: $ENVIRONMENT"
 # Create WordPress directory if it doesn't exist
 mkdir -p "$WP_PATH"
 
-# Check if WordPress is already installed
+# Check if WordPress is already fully installed
+WORDPRESS_INSTALLED=false
 if [ -f "$WP_PATH/wp-config.php" ]; then
-    log_warn "WordPress already appears to be installed (wp-config.php exists)"
-    log_info "Skipping WordPress installation..."
-else
+    # Check if WordPress database is actually set up
+    if docker exec "$WEBSERVER_CONTAINER" wp core is-installed --path=/var/www/html --allow-root 2>/dev/null; then
+        log_warn "WordPress is already fully installed"
+        log_info "Skipping WordPress installation..."
+        WORDPRESS_INSTALLED=true
+    else
+        log_warn "WordPress files exist but installation is incomplete"
+        log_info "Completing WordPress installation..."
+    fi
+fi
+
+if [ "$WORDPRESS_INSTALLED" = false ]; then
     log_info "Starting Docker containers..."
     
     # Start containers first
