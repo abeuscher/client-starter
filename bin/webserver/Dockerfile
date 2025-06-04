@@ -60,5 +60,12 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 # Enable apache modules
 RUN a2enmod rewrite headers
 
+# Add this after your existing PHP extensions, before cleanup
+# Install WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp && \
+    wp --info --allow-root
+
 # Cleanup
 RUN rm -rf /usr/src/*
