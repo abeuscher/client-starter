@@ -1,7 +1,7 @@
 const pugPHPFilter = require("pug-php-filter");
 
 var srcDir = "./src/";
-var buildDir = "./public_html/wp-content/themes/THEMEFOLDER/";
+var buildDir = "./public_html/wp-content/themes/${CLIENT_NAME}/";
 
 var jsSrcDir = srcDir + "js/";
 var jsBuildDir = buildDir + "js/";
@@ -17,7 +17,7 @@ var templateBuildDir = buildDir;
 
 function siteSettings() {
   return {
-    siteName: "SITENAME",
+    siteName: "${WP_TITLE}",
     pugSettings: {
       filters: {
         php: pugPHPFilter,

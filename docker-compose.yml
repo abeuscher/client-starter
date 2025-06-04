@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  webserver:
+    networks:
+      - traefik
+      - ${CLIENT_NAME:-client}
+    build:
+      context: ./bin/webserver
+    container_name: "${CONTAINER_PREFIX:-client}-webserver-${ENVIRONMENT:-staging}"
+    restart: "always"
+    hostname: ${WP_DOMAIN}
+    volumes:
+      - ${DOCUMENT_ROOT:-./public_html}:/var/www/html:cached
+      - ${PHP_INI:-./config/php/php.ini}:/usr/local/etc/php/php.ini
+      - ${LOG_DIR:-./logs/apache2}:/var/log/apache2
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}.rule=Host(`${WP_DOMAIN}`)"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}.entrypoints=websecure"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}.tls=true"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}.tls.certresolver=letsencrypt"
+      - "traefik.http.services.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}.loadbalancer.server.port=80"
+      # Optional: redirect www to non-www
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www.rule=Host(`www.${WP_DOMAIN}`)"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www.entrypoints=websecure"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www.tls=true"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www.middlewares=${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www-redirect"
+      - "traefik.http.middlewares.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www-redirect.redirectregex.regex=^https://www\\.(.+)"
+      - "traefik.http.middlewares.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www-redirect.redirectregex.replacement=https://$${1}"
+      - "traefik.http.middlewares.${CONTAINER_PREFIX:-client}-${ENVIRONMENT:-staging}-www-redirect.redirectregex.permanent=true"
+    depends_on:
+      - database
+    environment:
+      - WORDPRESS_DB_HOST=${MYSQL_HOST:-database}
+      - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
+      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
+
+  database:
+    networks:
+      - ${CLIENT_NAME:-client}
+    image: mysql:8.0
+    command: --log_bin_trust_function_creators=1 --default-authentication-plugin=mysql_native_password
+    container_name: "${CONTAINER_PREFIX:-client}-mysql-${ENVIRONMENT:-staging}"
+    restart: "always"
+    volumes:
+      - ${MYSQL_DATA_DIR:-./data/mysql}:/var/lib/mysql
+      - ${MYSQL_LOG_DIR:-./logs/mysql}:/var/log/mysql
+      - ./bin/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          cpus: "${MYSQL_CPU_LIMIT:-2}"
+          memory: ${MYSQL_MEMORY_LIMIT:-4G}
+
+networks:
+  traefik:
+    external: true
+  ${CLIENT_NAME:-client}:
+    driver: bridge
