@@ -1,0 +1,122 @@
+// Minimal Grid System for Homepage Template
+// ------------------------------
+@use "sass:math";
+@use "sass:map";
+
+// Grid Variables
+$grid-columns: 12;
+$grid-gutter: 30px;
+$container-padding: 15px;
+$breakpoints: (
+  "xs": 0,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+);
+
+// Container
+.container {
+  width: 100%;
+  padding-right: $container-padding;
+  padding-left: $container-padding;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+
+  @media (min-width: #{map.get($breakpoints, "sm")}) {
+    max-width: 540px;
+  }
+
+  @media (min-width: #{map.get($breakpoints, "md")}) {
+    max-width: 720px;
+  }
+
+  @media (min-width: #{map.get($breakpoints, "lg")}) {
+    max-width: 960px;
+  }
+
+  @media (min-width: #{map.get($breakpoints, "xl")}) {
+    max-width: 1140px;
+  }
+}
+
+// Row
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$container-padding;
+  margin-left: -$container-padding;
+}
+
+// Basic Columns
+[class*="col-"] {
+  position: relative;
+  width: 100%;
+  padding-right: $container-padding;
+  padding-left: $container-padding;
+}
+
+// Column Width Generator
+@mixin make-col($size) {
+  $width-percentage: math.div($size, $grid-columns) * 100%;
+  flex: 0 0 $width-percentage;
+  max-width: $width-percentage;
+}
+
+// Generate Column Classes for md breakpoint (the only one we use in the template)
+@media (min-width: #{map.get($breakpoints, "md")}) {
+  .col-md-6 {
+    @include make-col(6);
+  }
+}
+
+// For text alignment used in the template
+.text-center {
+  text-align: center;
+}
+
+// Full Width Content
+.full-width {
+  width: 100%;
+}
+
+// CSS Grid Alternative for the Row/Column System
+// This can be used as a modern alternative to the flexbox approach above
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat($grid-columns, 1fr);
+  grid-gap: $grid-gutter;
+  padding: 0 $container-padding;
+}
+
+// A utility to quickly create a two-column layout (for the services/press section)
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: $grid-gutter;
+
+  @media (min-width: #{map.get($breakpoints, "md")}) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// Portfolio Grid (specifically for the 2-column portfolio items)
+.portfolio-items.row {
+  // Base properties
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: $grid-gutter;
+  margin-left: 0;
+  margin-right: 0;
+
+  // Media query
+  @media (min-width: #{map.get($breakpoints, "md")}) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  // Child elements
+  & .portfolio-item {
+    padding: 0;
+  }
+}

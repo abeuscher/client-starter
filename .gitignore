@@ -1,0 +1,13 @@
+app
+logs
+node_modules
+public_html
+!/.DS_Store
+.DS_Store
+yarn.lock
+package-lock.json
+data
+.env
+!/.en
+yarn-error.log
+public

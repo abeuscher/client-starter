@@ -1,0 +1,83 @@
+@use "variables" as *;
+@use 'sass:map';
+@use 'sass:list';
+
+// Modern transition mixin
+@mixin smooth-transition($duration: 400ms, $properties: all) {
+  transition: $properties $duration cubic-bezier(0.335, 0.815, 0.47, 1);
+}
+
+// Simplified media query mixin
+@mixin bp($breakpoint, $type: 'min') {
+  $bp-value: map.get($bps, $breakpoint);
+  
+  @if not $bp-value {
+    @error "Breakpoint '#{$breakpoint}' not found in $bps map";
+  }
+  
+  // Handle standard min/max queries
+  @if $type == 'min' {
+    @media (min-width: $bp-value) {
+      @content;
+    }
+  } @else if $type == 'max' {
+    @media (max-width: $bp-value) {
+      @content;
+    }
+  } @else if $type == 'only' {
+    // Get the next breakpoint for clamping
+    $keys: map.keys($bps);
+    $current-index: list.index($keys, $breakpoint);
+    $next-key: if($current-index < list.length($keys), 
+                  list.nth($keys, $current-index + 1), 
+                  null);
+    
+    @if $next-key {
+      $next-value: map.get($bps, $next-key);
+      @media (min-width: $bp-value) and (max-width: $next-value - 1px) {
+        @content;
+      }
+    } @else {
+      // Last breakpoint, so just use min-width
+      @media (min-width: $bp-value) {
+        @content;
+      }
+    }
+  }
+}
+
+// Additional helper mixins for common patterns
+@mixin bp-between($min-bp, $max-bp) {
+  $min-value: map.get($bps, $min-bp);
+  $max-value: map.get($bps, $max-bp);
+  
+  @if not $min-value {
+    @error "Breakpoint '#{$min-bp}' not found in $bps map";
+  }
+  @if not $max-value {
+    @error "Breakpoint '#{$max-bp}' not found in $bps map";
+  }
+  
+  @media (min-width: $min-value) and (max-width: $max-value - 1px) {
+    @content;
+  }
+}
+
+// Container query mixin for modern layouts
+@mixin container-query($breakpoint, $type: 'min') {
+  $bp-value: map.get($bps, $breakpoint);
+  
+  @if not $bp-value {
+    @error "Breakpoint '#{$breakpoint}' not found in $bps map";
+  }
+  
+  @if $type == 'min' {
+    @container (min-width: $bp-value) {
+      @content;
+    }
+  } @else if $type == 'max' {
+    @container (max-width: $bp-value) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+block template
+- var themeDir = "/wp-content/themes/wardgreenhouses.com/"
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(property="og:locale" content="en_US")
+    meta(property="og:site_name" content="The Beuschers Real Estate")
+    meta(property="twitter:card" content="summary")
+    meta(property="twitter:site" content="thebeuschers.com")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato")
+    link(rel='shortcut icon', href=themeDir + 'images/favicon.ico')
+    :php
+      global $wp_query;
+      if (function_exists( 'the_seo_framework' )) {
+        $title = the_seo_framework()->get_title();
+        $og_title = the_seo_framework()->get_open_graph_title();
+        $tw_title = the_seo_framework()->get_twitter_title();
+        $description = the_seo_framework()->get_description();
+        $og_description = the_seo_framework()->get_open_graph_description();
+        $tw_description = the_seo_framework()->get_twitter_description();
+        $featured_image = the_seo_framework()->get_image_from_cache();
+      }
+      else {
+        $title = get_the_title();
+        $og_title = get_the_title();
+        $tw_title = get_the_title();
+        $featured_image  = "";
+        $description = get_the_excerpt();
+        $og_description = get_the_excerpt();
+        $tw_description = get_the_excerpt();
+
+      }
+      wp_reset_query();
+      $link = get_the_permalink();
+      echo "<title>$title</title>";
+      echo "<meta name='description' content='".$description."' />".
+        "<meta property='og:title' content='$og_title' />".
+        "<meta property='og:url' content='$link' />".
+        "<meta property='og:description' content='$og_description' />".
+        "<meta property='og:image' content='$featured_image' />".
+        "<meta name='twitter:title' content='$tw_title' />".
+        "<meta name='twitter:description' content='$tw_description' />".
+        "<meta name='twitter:image' content='$featured_image' />";
+      $slink = get_template_directory_uri() . "/style.css";
+      echo "<link href='$slink' rel='stylesheet' />";
+    script(async='' src='https://www.googletagmanager.com/gtag/js?id=UA-127402653-1')
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-127402653-1');
+  body.loading
+    block page-content
+    script(src=themeDir+"js/bundle.min.js")
+    script(src="//pixel.adwerx.com/208963/awp.js",async=true)

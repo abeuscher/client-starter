@@ -1,0 +1,78 @@
+//config
+$cdn-path: "/wp-content/themes/thebeuschers/";
+$img-path: $cdn-path + "images/";
+$font-path: $cdn-path + "/fonts/";
+
+//Breakpoints
+$bps: (
+  xs: 0,
+  s: 641px,
+  m: 1025px,
+  l: 1321px,
+  xl: 1921px,
+);
+
+$gutter-width: 24px;
+
+//color-values
+$white: #ffffff;
+$black: #000000;
+$off-black: #4a4a4a;
+$gray-hatband: #494949;
+$gray-blue: #2e2b56;
+$off-white: #f6f6f6;
+$grey: #cdcdcd;
+$blue: #02155b;
+$light-blue: #7b7bd9;
+$green: #2a7d2a;
+$red: #c0392b;
+
+// Variables
+$primary-color: $off-black; // Green theme for greenhouse business
+$secondary-color: #333;
+
+$accent-color: $green;
+$light-color: #ccc;
+$dark-color: #212529;
+
+$text-color: #333;
+$breakpoint-mobile: 768px;
+$header-padding: 15px;
+$transition-speed: 0.3s;
+
+//colors
+$body-bg-color: linear-gradient(90deg, rgb(41, 44, 99) 0%, rgb(54, 64, 125) 100%);
+$body-text-color: $black;
+$body-link-color: $black;
+$header-color: $blue;
+
+// Header specific colors
+$header-bg-color: rgba(0, 0, 0, 0.8);
+$header-text-color: #f8f8f8;
+$link-hover-color: #f3f384;
+
+//fonts
+$body-font: "Lato", sans-serif;
+$header-font: "Lato", sans-serif;
+$nav-font: "Lato", sans-serif;
+
+// Header measurements
+$header-height: 12rem;
+$header-height-scrolled: 3rem;
+$header-height-mobile: 5rem;
+$header-z-index: 1000;
+$nav-height: 3rem;
+
+// Component measurements
+$icon-size: 24px;
+$icon-inner-size: 12px;
+
+// Shadows
+$shadow-light: 0px 2px 3px rgba(0, 0, 0, 0.2);
+$shadow-medium: 0px 3px 5px rgba(0, 0, 0, 0.5);
+$shadow-heavy: 0px 4px 6px rgba(0, 0, 0, 0.7);
+
+// Transitions
+$transition-speed: 0.25s;
+$transition-timing: ease-in;
+$header-transition: all 0.3s ease-out;

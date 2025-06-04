@@ -1,0 +1,99 @@
+@use "variables" as *;
+@use "sass-mixins" as *;
+
+// ===================================
+// Base styles
+// ===================================
+body {
+  font-family: $body-font;
+  color: $body-text-color;
+  font-weight: 300;
+  background-size: cover;
+  background-position: fixed;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: $header-font;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+// ===================================
+// Utility classes
+// ===================================
+.padding-top {
+  padding-top: $gutter-width;
+}
+
+.padding-bottom {
+  padding-bottom: $gutter-width;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+// ===================================
+// Button styles
+// ===================================
+.button {
+  background: #ccc;
+  color: $off-black;
+  padding: 0.5em 1.5em;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid transparent;
+  border-radius: 2em;
+
+  &:hover {
+    border-color: #999;
+    background: #666;
+    color: $white;
+  }
+
+  &.main {
+    font-size: 1.2em;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &.cta {
+    margin-top: 1em;
+  }
+
+  &.bottom-cta {
+    padding: 0.25em 0.5em;
+    font-size: 0.9em;
+    margin: 0 0.5em;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// ===================================
+// Caption styles
+// ===================================
+.caption {
+  p {
+    font-size: 0.8em;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-style: italic;
+  }
+}

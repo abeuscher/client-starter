@@ -1,0 +1,206 @@
+extends inc/page.pug
+
+block template
+  :php
+    /*
+    Template Name: Home Page
+    */
+
+block content
+  article.content-main
+    //- Hero Section with Story Box
+    section.hero-section
+      :php
+        // Get hero section data
+        $hero = get_field('hero_section');
+        if($hero && $hero['hero_background']):
+
+      .hero-background
+        :php
+          // Output hero background image as JSON data
+          $hero_img = $hero['hero_background'];
+          $hero_img_data = json_encode($hero_img, JSON_UNESCAPED_SLASHES);
+          echo "<div class='hero-image' data-bg-object='" . $hero_img_data . "'></div>";
+
+      //- Story Box (right side overlay)
+      .hero-story-container
+        .hero-story-box
+          :php
+            if($hero['hero_story']):
+              // Story Title
+              if($hero['hero_story']['story_title']):
+                echo '<h2 class="hero-story-title">' . $hero['hero_story']['story_title'] . '</h2>';
+              endif;
+
+              // Story Content
+              if($hero['hero_story']['story_content']):
+                echo '<div class="hero-story-content">' . $hero['hero_story']['story_content'] . '</div>';
+              endif;
+            endif;
+
+      :php
+        endif; // End hero section check
+
+    //- Two Column Section (Services & Press)
+    section.content-columns-section
+      .container
+        .row
+          //- Left Column (Services)
+          .col-md-6.services-column
+            :php
+              // Get services data
+              $content_columns = get_field('content_columns');
+              if($content_columns && $content_columns['services_column']):
+                $services = $content_columns['services_column'];
+
+                // Services Title
+                if($services['services_title']):
+                  echo '<h2 class="section-title">' . $services['services_title'] . '</h2>';
+                endif;
+
+                // Services Items
+                if($services['services_items']):
+                  echo '<div class="services-items">';
+
+                  foreach($services['services_items'] as $service):
+                    echo '<div class="service-item">';
+
+                    // Service Image - using JSON data attribute
+                    if($service['service_image']):
+                      $service_img_data = json_encode($service['service_image'], JSON_UNESCAPED_SLASHES);
+                      echo "<div class='service-image' data-bg-object='" . $service_img_data . "'></div>";
+                    endif;
+
+                    // Service Title
+                    if($service['service_title']):
+                      echo '<h3 class="service-title">' . esc_html($service['service_title']) . '</h3>';
+                    endif;
+
+                    // Service Description
+                    if($service['service_description']):
+                      echo '<p class="service-description">' . esc_html($service['service_description']) . '</p>';
+                    endif;
+
+                    // Service Link
+                    if($service['service_link']):
+                      $link = $service['service_link'];
+                      $target = $link['target'] ? ' target="'. $link['target'] .'"' : '';
+                      echo '<a href="' . esc_url($link['url']) . '"' . $target . ' class="service-link">' . esc_html($link['title']) . '</a>';
+                    endif;
+
+                    echo '</div>'; // End service item
+                  endforeach;
+
+                  echo '</div>'; // End services items
+                endif;
+
+                // All Services Link
+                if($services['services_all_link']):
+                  $all_link = $services['services_all_link'];
+                  $target = $all_link['target'] ? ' target="'. $all_link['target'] .'"' : '';
+                  echo '<div class="services-all-link">';
+                  echo '<a href="' . esc_url($all_link['url']) . '"' . $target . ' class="btn btn-secondary">' . esc_html($all_link['title']) . '</a>';
+                  echo '</div>';
+                endif;
+              endif;
+
+          //- Right Column (Press Links)
+          .col-md-6.press-column
+            h2.section-title Press
+            :php
+              // Get press data
+              if($content_columns && $content_columns['press_column']):
+                $press = $content_columns['press_column'];
+
+                // Press Items
+                if($press['press_items']):
+                  echo '<ul class="press-list">';
+
+                  foreach($press['press_items'] as $item):
+                    echo '<li class="press-item">';
+
+                    // Press Outlet
+                    if($item['press_outlet']):
+                      echo '<span class="press-outlet">' . esc_html($item['press_outlet']) . '</span>';
+                    endif;
+
+                    // Press Date
+                    if($item['press_date']):
+                      echo '<span class="press-date">' . esc_html($item['press_date']) . '</span>';
+                    endif;
+
+                    // Press Title with Link
+                    if($item['press_title'] && $item['press_link']):
+                      echo '<h3 class="press-title">';
+                      echo '<a href="' . esc_url($item['press_link']) . '" target="_blank">' . esc_html($item['press_title']) . '</a>';
+                      echo '</h3>';
+                    endif;
+
+                    echo '</li>'; // End press item
+                  endforeach;
+
+                  echo '</ul>'; // End press list
+                endif;
+              endif;
+
+    //- Portfolio Gallery Section (Full Width)
+    section.portfolio-section
+      .container
+        :php
+          // Get portfolio data
+          $portfolio = get_field('portfolio_section');
+
+          // Portfolio Title
+          if($portfolio && $portfolio['portfolio_title']):
+            echo '<h2 class="section-title text-center">' . $portfolio['portfolio_title'] . '</h2>';
+          endif;
+
+          // Portfolio Introduction
+          if($portfolio && $portfolio['portfolio_introduction']):
+            echo '<div class="portfolio-intro text-center">' . wpautop($portfolio['portfolio_introduction']) . '</div>';
+          endif;
+
+          // Portfolio Items
+          if($portfolio && $portfolio['portfolio_items']):
+            echo '<div class="portfolio-items row">';
+
+            foreach($portfolio['portfolio_items'] as $post):
+              setup_postdata($post);
+              echo '<div class="col-md-6 portfolio-item">';
+              echo '<a href="' . get_permalink() . '" class="portfolio-item-link">';
+
+              // Portfolio Image - using JSON data attribute for featured image
+              if(has_post_thumbnail()):
+                $thumb_id = get_post_thumbnail_id();
+                $thumb_data = wp_get_attachment_image_src($thumb_id, 'large', false);
+                $image_object = array(
+                  'ID' => $thumb_id,
+                  'url' => $thumb_data[0],
+                  'width' => $thumb_data[1],
+                  'height' => $thumb_data[2],
+                  'alt' => get_post_meta($thumb_id, '_wp_attachment_image_alt', true),
+                  'title' => get_the_title($thumb_id)
+                );
+                $portfolio_img_data = json_encode($image_object, JSON_UNESCAPED_SLASHES);
+                echo "<div class='portfolio-image' data-bg-object='" . $portfolio_img_data . "'></div>";
+              endif;
+
+              // Portfolio Title
+              echo '<h3 class="portfolio-item-title">' . get_the_title() . '</h3>';
+
+              echo '</a>';
+              echo '</div>'; // End portfolio item
+            endforeach;
+
+            wp_reset_postdata();
+            echo '</div>'; // End portfolio items
+          endif;
+
+          // Portfolio All Link
+          if($portfolio && $portfolio['portfolio_link']):
+            $port_link = $portfolio['portfolio_link'];
+            $target = $port_link['target'] ? ' target="'. $port_link['target'] .'"' : '';
+            echo '<div class="portfolio-all-link text-center">';
+            echo '<a href="' . esc_url($port_link['url']) . '"' . $target . ' class="btn btn-primary">' . esc_html($port_link['title']) . '</a>';
+            echo '</div>';
+          endif;

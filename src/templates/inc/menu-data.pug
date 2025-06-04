@@ -1,0 +1,36 @@
+-
+  if (typeof siteurl === "undefined") {
+    siteurl = "/"
+  }
+  var menudata = [
+    {
+      label: "Home",
+      url: siteurl,
+      classname: "home"
+    },
+    {
+      label: "Consulting",
+      url: siteurl+"consulting",
+      classname: ""
+    },
+    {
+      label: "Portfolio",
+      url: siteurl+"portfolio",
+      classname: ""
+    },
+    {
+      label: "Contact",
+      url: siteurl+"contact",
+      classname: ""
+    }]
+mixin menuitem(item)
+  li
+    a(href=item.url,class=item.classname)=item.label
+    if item.children
+      ul
+        each subitem in item.children
+          +menuitem(subitem)  
+mixin makemenu(data)
+  ul
+    each item in data
+      +menuitem(item)
