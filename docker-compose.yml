@@ -1,10 +1,8 @@
-version: "3.8"
-
 services:
   webserver:
     networks:
       - traefik
-      - ${CLIENT_NAME:-client}
+      - client-network
     build:
       context: ./bin/webserver
     container_name: "${CONTAINER_PREFIX:-client}-webserver-${ENVIRONMENT:-staging}"
@@ -40,7 +38,7 @@ services:
 
   database:
     networks:
-      - ${CLIENT_NAME:-client}
+      - client-network
     image: mysql:8.0
     command: --log_bin_trust_function_creators=1 --default-authentication-plugin=mysql_native_password
     container_name: "${CONTAINER_PREFIX:-client}-mysql-${ENVIRONMENT:-staging}"
@@ -63,5 +61,5 @@ services:
 networks:
   traefik:
     external: true
-  ${CLIENT_NAME:-client}:
+  client-network:
     driver: bridge
