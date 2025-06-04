@@ -180,6 +180,15 @@ if [ "$WORDPRESS_INSTALLED" = false ]; then
 
     log_info "Database is ready"
 
+    # Ensure WordPress user exists (MySQL may not have created it)
+    log_info "Creating WordPress database user..."
+    docker exec "$DATABASE_CONTAINER" mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "
+        CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`;
+        CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+        GRANT ALL PRIVILEGES ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%';
+        FLUSH PRIVILEGES;
+    " 2>/dev/null || log_warn "User creation may have failed, but continuing..."
+
     # Download WordPress core
     log_info "Downloading WordPress core..."
     docker exec "$WEBSERVER_CONTAINER" wp core download --path=/var/www/html --allow-root
