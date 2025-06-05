@@ -265,8 +265,8 @@ log_info "Installing required plugins..."
 PLUGINS=(
     "classic-editor"
     "wp-super-cache"
-    "wordfence"
-    "updraftplus"
+    "civicrm"
+    "acf-pro"
 )
 
 for plugin in "${PLUGINS[@]}"; do
