@@ -278,14 +278,14 @@ done
 
 # Install premium plugins from repo
 PREMIUM_PLUGINS=(
-    "plugins/advanced-custom-fields-pro.zip"
-    "plugins/civicrm-6.1.2-wordpress.zip"
+    "./plugins/advanced-custom-fields-pro.zip"
+    "./plugins/civicrm-6.1.2-wordpress.zip"
 )
 
 for plugin_zip in "${PREMIUM_PLUGINS[@]}"; do
     if [ -f "$plugin_zip" ]; then
         log_info "Installing premium plugin: $(basename $plugin_zip)"
-        docker exec "$WEBSERVER_CONTAINER" wp plugin install "/repo/$plugin_zip" --activate --path=/var/www/html --allow-root
+        docker exec "$WEBSERVER_CONTAINER" wp plugin install "$plugin_zip" --activate --path=/var/www/html --allow-root
     fi
 done
 
