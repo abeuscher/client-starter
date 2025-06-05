@@ -309,6 +309,14 @@ docker exec "$WEBSERVER_CONTAINER" find /var/www/html -type d -exec chmod 755 {}
 docker exec "$WEBSERVER_CONTAINER" find /var/www/html -type f -exec chmod 644 {} \;
 docker exec "$WEBSERVER_CONTAINER" chmod 600 /var/www/html/wp-config.php
 
+# Fix wp-config.php for reverse proxy HTTPS detection
+log_info "Configuring WordPress for reverse proxy..."
+docker exec "$WEBSERVER_CONTAINER" sed -i "/\/\* That's all, stop editing/i\\
+// Fix for Traefik reverse proxy HTTPS detection\\
+if ( isset( \\\$_SERVER['HTTP_X_FORWARDED_PROTO'] ) && \\\$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {\\
+    \\\$_SERVER['HTTPS']='on';\\
+}" /var/www/html/wp-config.php
+
 # Install Node.js dependencies and run build
 log_info "Setting up build configuration..."
 if [ -f "settings.template.js" ]; then
