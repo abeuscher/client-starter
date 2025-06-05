@@ -265,8 +265,6 @@ log_info "Installing required plugins..."
 PLUGINS=(
     "classic-editor"
     "wp-super-cache"
-    "civicrm"
-    "acf-pro"
 )
 
 for plugin in "${PLUGINS[@]}"; do
@@ -275,6 +273,19 @@ for plugin in "${PLUGINS[@]}"; do
         docker exec "$WEBSERVER_CONTAINER" wp plugin install "$plugin" --activate --path=/var/www/html --allow-root
     else
         log_info "Plugin already installed: $plugin"
+    fi
+done
+
+# Install premium plugins from repo
+PREMIUM_PLUGINS=(
+    "plugins/advanced-custom-fields-pro.zip"
+    "plugins/civicrm-6.1.2-wordpress.zip"
+)
+
+for plugin_zip in "${PREMIUM_PLUGINS[@]}"; do
+    if [ -f "$plugin_zip" ]; then
+        log_info "Installing premium plugin: $(basename $plugin_zip)"
+        docker exec "$WEBSERVER_CONTAINER" wp plugin install "/repo/$plugin_zip" --activate --path=/var/www/html --allow-root
     fi
 done
 
