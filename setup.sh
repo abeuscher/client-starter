@@ -278,8 +278,8 @@ done
 
 # Install premium plugins from repo
 PREMIUM_PLUGINS=(
-    "./plugins/advanced-custom-fields-pro.zip"
-    "./plugins/civicrm-6.1.2-wordpress.zip"
+    "plugins/advanced-custom-fields-pro.zip"
+    "plugins/civicrm-wordpress.zip"
 )
 
 for plugin_zip in "${PREMIUM_PLUGINS[@]}"; do
