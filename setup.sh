@@ -285,6 +285,7 @@ fi
 
 # Set file permissions
 log_info "Setting file permissions..."
+docker exec "$WEBSERVER_CONTAINER" chown -R www-data:www-data /var/www/html
 docker exec "$WEBSERVER_CONTAINER" find /var/www/html -type d -exec chmod 755 {} \;
 docker exec "$WEBSERVER_CONTAINER" find /var/www/html -type f -exec chmod 644 {} \;
 docker exec "$WEBSERVER_CONTAINER" chmod 600 /var/www/html/wp-config.php
