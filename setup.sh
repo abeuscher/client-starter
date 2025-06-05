@@ -59,8 +59,27 @@ fi
 # Safety check - prevent re-running setup for same environment
 if [ -f ".setup-complete-${ENVIRONMENT}" ]; then
     log_warn "Setup already completed for ${ENVIRONMENT} environment."
-    log_info "If you need to re-run setup for this environment, delete .setup-complete-${ENVIRONMENT} file first."
-    exit 0
+    
+    if [ "$CLEAN_INSTALL" = true ]; then
+        log_warn "Clean install requested, but setup has already been completed."
+        echo ""
+        echo "This will:"
+        echo "  - Stop and remove containers"
+        echo "  - Delete all WordPress files"
+        echo "  - Remove database data"
+        echo "  - Reset setup completion status"
+        echo ""
+        read -p "Are you sure you want to continue? [y/N] " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            log_info "Clean install cancelled"
+            exit 0
+        fi
+        log_info "Proceeding with clean install..."
+    else
+        log_info "If you need to re-run setup for this environment, use: ./setup.sh --clean"
+        exit 0
+    fi
 fi
 
 log_info "Starting WordPress client setup..."
