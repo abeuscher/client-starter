@@ -277,17 +277,22 @@ for plugin in "${PLUGINS[@]}"; do
 done
 
 # Install premium plugins from repo
-PREMIUM_PLUGINS=(
-    "plugins/advanced-custom-fields-pro.zip"
-    "plugins/civicrm-wordpress.zip"
-)
+log_info "Installing premium plugins..."
 
-for plugin_zip in "${PREMIUM_PLUGINS[@]}"; do
-    if [ -f "$plugin_zip" ]; then
-        log_info "Installing premium plugin: $(basename $plugin_zip)"
-        docker exec "$WEBSERVER_CONTAINER" wp plugin install "$plugin_zip" --activate --path=/var/www/html --allow-root
-    fi
-done
+if [ -f "plugins/advanced-custom-fields-pro.zip" ]; then
+    log_info "Installing ACF Pro..."
+    docker cp "plugins/advanced-custom-fields-pro.zip" "$WEBSERVER_CONTAINER:/tmp/"
+    docker exec "$WEBSERVER_CONTAINER" wp plugin install /tmp/advanced-custom-fields-pro.zip --activate --path=/var/www/html --allow-root
+    docker exec "$WEBSERVER_CONTAINER" rm /tmp/advanced-custom-fields-pro.zip
+fi
+
+if [ -f "plugins/civicrm-"*"-wordpress.zip" ]; then
+    log_info "Installing CiviCRM..."
+    CIVICRM_ZIP=$(ls plugins/civicrm-*-wordpress.zip | head -1)
+    docker cp "$CIVICRM_ZIP" "$WEBSERVER_CONTAINER:/tmp/civicrm.zip"
+    docker exec "$WEBSERVER_CONTAINER" wp plugin install /tmp/civicrm.zip --activate --path=/var/www/html --allow-root
+    docker exec "$WEBSERVER_CONTAINER" rm /tmp/civicrm.zip
+fi
 
 # Configure WordPress settings
 log_info "Configuring WordPress settings..."
