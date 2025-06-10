@@ -9,7 +9,8 @@
     "silent": "node build.js --silent",
     "watch": "node build.js --watch",
     "production": "node build.js --production",
-    "setup": "./setup.sh"
+    "setup": "./setup.sh",
+    "tree": "find . -maxdepth 8 -type d \\( -name \"node_modules\" -o -name \".git\" \\) -prune -o -print"
   },
   "author": "Alex Beuscher",
   "license": "MIT",
