@@ -10,6 +10,8 @@ body.wp-admin {
   --bg-secondary: #0b6803;
   --bg-tertiary: #0e3d0a;
   --bg-highlight: #209e22;
+  --bg-highlight-hover: #02394c;
+  --text-hover: #fcfafa;
   --accent: #209e91;
   --text: #666;
   --text-muted: #999;
@@ -51,6 +53,13 @@ body.wp-admin {
 #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu {
   background: var(--bg-highlight);
   color: var(--text-menu);
+}
+
+li.menu-top:hover,
+#adminmenu li.opensub > a.menu-top,
+#adminmenu li > a.menu-top:focus {
+  background: var(--bg-highlight-hover);
+  color: var(--text-hover);
 }
 
 .wrap,
