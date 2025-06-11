@@ -56,7 +56,10 @@ li.menu-top:hover,
   background: var(--bg-highlight-hover);
   color: var(--text-hover);
 }
-
+#adminmenu a:hover {
+  color: var(--text-hover);
+  box-shadow: inset 4px 0 0 0 var(--bg-highlight);
+}
 .wrap,
 .theme-wrap {
   transition: all 0.2s ease;
