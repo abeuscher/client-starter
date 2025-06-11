@@ -8,6 +8,7 @@ body.wp-admin {
   // Blur Admin color palette
   --bg-primary: #f6f6f6;
   --bg-secondary: #0b6803;
+  --bg-tertiary: #0e3d0a;
   --accent: #209e91;
   --text: #666;
   --text-muted: #999;
@@ -37,6 +38,12 @@ body.wp-admin {
 }
 #wpadminbar {
   background: var(--bg-secondary);
+}
+#adminmenu,
+#adminmenu .wp-submenu,
+#adminmenuback,
+#adminmenuwrap {
+  background: var(--bg-tertiary);
 }
 .wrap,
 .theme-wrap {
