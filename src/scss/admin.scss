@@ -3,3 +3,8 @@
 @import "blur/theme/conf/variables";
 @import "blur/theme/conf/mixins";
 @import "blur/theme/layout";
+@import "blur/theme/components/sidebar";
+@import "blur/theme/components/pageTop";
+@import "blur/theme/components/msgCenter";
+@import "blur/theme/bootstrap-overrides/panel";
+@import "blur/theme/bootstrap-overrides/tabs";
