@@ -1,4 +1,4 @@
-.require("dotenv").config();
+require("dotenv").config();
 const pugPHPFilter = require("pug-php-filter");
 
 var srcDir = "./src/";
@@ -48,7 +48,7 @@ function siteSettings() {
         name: "Main Stylesheet",
         srcDir: sassSrcDir,
         buildDir: sassBuildDir,
-      }
+      },
     ],
     assets: [
       {
