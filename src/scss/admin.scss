@@ -36,7 +36,8 @@ body.wp-admin {
   background: var(--bg-primary);
 }
 
-.wrap {
+.wrap,
+.theme-wrap {
   animation: contentFadeIn 0.5s ease;
 }
 
