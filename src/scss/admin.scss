@@ -46,7 +46,9 @@ body.wp-admin {
 #adminmenuwrap {
   background: var(--bg-tertiary);
 }
-.wp-has-current-submenu {
+.wp-has-current-submenu .wp-submenu .wp-submenu-head,
+#adminmenu li.current a.menu-top,
+#adminmenu li.wp-has-current-submenu a.wp-has-current-submenu {
   background: var(--bg-highlight);
   color: var(--text-menu);
 }
