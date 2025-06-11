@@ -1,10 +1,5 @@
 // WordPress adds classes like .wp-admin, .dashboard, etc.
 body.wp-admin {
-  // Global smooth transitions
-  * {
-    transition: all 0.2s ease;
-  }
-
   // Blur Admin color palette
   --bg-primary: #f6f6f6;
   --bg-secondary: #0b6803;
@@ -64,6 +59,7 @@ li.menu-top:hover,
 
 .wrap,
 .theme-wrap {
+  transition: all 0.2s ease;
   animation: contentFadeIn 0.5s ease;
 }
 
