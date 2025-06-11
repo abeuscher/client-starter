@@ -187,7 +187,7 @@ if [ "$WORDPRESS_INSTALLED" = false ]; then
     max_attempts=15
     attempt=1
     
-    while ! MYSQL_PWD="$MYSQL_ROOT_PASSWORD" docker exec "$DATABASE_CONTAINER" mysql -u root -e "SELECT 1;" >/dev/null 2>&1; do
+    while ! docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" "$DATABASE_CONTAINER" mysql -u root -e "SELECT 1;" >/dev/null 2>&1; do
         if [ $attempt -eq $max_attempts ]; then
             log_error "MySQL is not responding to queries after $max_attempts attempts"
             exit 1
@@ -201,11 +201,11 @@ if [ "$WORDPRESS_INSTALLED" = false ]; then
 
     # Ensure WordPress user exists (MySQL may not have created it)
     log_info "Creating WordPress database user..."
-    MYSQL_PWD="$MYSQL_ROOT_PASSWORD" docker exec "$DATABASE_CONTAINER" mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`;" || log_error "Database creation failed"
-    MYSQL_PWD="$MYSQL_ROOT_PASSWORD" docker exec "$DATABASE_CONTAINER" mysql -u root -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" || log_error "User creation failed"
-    MYSQL_PWD="$MYSQL_ROOT_PASSWORD" docker exec "$DATABASE_CONTAINER" mysql -u root -e "GRANT ALL PRIVILEGES ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%';" || log_error "Permission grant failed"
-    MYSQL_PWD="$MYSQL_ROOT_PASSWORD" docker exec "$DATABASE_CONTAINER" mysql -u root -e "FLUSH PRIVILEGES;" || log_error "Privilege flush failed"
-
+    docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" "$DATABASE_CONTAINER" mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`;" || log_error "Database creation failed"
+    docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" "$DATABASE_CONTAINER" mysql -u root -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" || log_error "User creation failed"
+    docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" "$DATABASE_CONTAINER" mysql -u root -e "GRANT ALL PRIVILEGES ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%';" || log_error "Permission grant failed"
+    docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" "$DATABASE_CONTAINER" mysql -u root -e "FLUSH PRIVILEGES;" || log_error "Privilege flush failed"
+    
     # Download WordPress core
     log_info "Downloading WordPress core..."
     docker exec "$WEBSERVER_CONTAINER" wp core download --path=/var/www/html --allow-root
