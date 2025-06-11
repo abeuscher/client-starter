@@ -1,10 +1,42 @@
-// Import color scheme FIRST
-@import "blur/theme/conf/colorScheme/blur";
-@import "blur/theme/conf/variables";
-@import "blur/theme/conf/mixins";
-@import "blur/theme/layout";
-@import "blur/theme/components/sidebar";
-@import "blur/theme/components/pageTop";
-@import "blur/theme/components/msgCenter";
-@import "blur/theme/bootstrap-overrides/panel";
-@import "blur/theme/bootstrap-overrides/tabs";
+// Base state - everything starts invisible
+.wrap,
+.postbox,
+#adminmenu li,
+.wp-header-end + * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+// Use CSS animation delays to stagger the reveals
+.wrap {
+  animation: slideInUp 0.6s ease forwards;
+  animation-delay: 0.1s;
+}
+
+.postbox:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.postbox:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.postbox:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+#adminmenu li:nth-child(1) {
+  animation-delay: 0.05s;
+}
+#adminmenu li:nth-child(2) {
+  animation-delay: 0.1s;
+}
+#adminmenu li:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
