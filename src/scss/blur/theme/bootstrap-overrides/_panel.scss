@@ -1,8 +1,9 @@
 $panel-title-height: 44px;
 $panel-heading-font-size: 16px;
 
-.panel {
-  @include scrollbars(.4em, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.7));
+.panel,
+.postbox {
+  @include scrollbars(0.4em, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.7));
   color: $default-text;
   background-color: $default;
   border: none;
@@ -41,13 +42,14 @@ $panel-heading-font-size: 16px;
 }
 
 .panel.panel-blur {
-  $blurredBgUrl: $images-root + 'blur-bg-blurred.jpg';
+  $blurredBgUrl: $images-root + "blur-bg-blurred.jpg";
   background: url($blurredBgUrl);
   transition: none;
   background-attachment: fixed;
 }
 
-.panel {
+.panel,
+.postbox {
   > .panel-body {
     padding: 15px 22px;
     height: 100%;
@@ -62,7 +64,8 @@ $panel-heading-font-size: 16px;
   }
 }
 
-.panel-heading, .panel-footer {
+.panel-heading,
+.panel-footer {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.12);
   height: $panel-title-height;
@@ -85,7 +88,6 @@ $panel-heading-font-size: 16px;
     color: $bootstrap-panel-text;
   }
 }
-
 
 .panel-primary {
   > .panel-heading {
@@ -122,21 +124,24 @@ $panel-heading-font-size: 16px;
   }
 }
 
-.bootstrap-panel{
+.bootstrap-panel {
   background-color: $bootstrap-panel-bg;
-  .panel-body{
+  .panel-body {
     color: $bootstrap-panel-text;
   }
 }
 
-.accordion-panel.panel {
+.accordion-panel.panel,
+.postbox {
   &.panel-primary,
   &.panel-success,
   &.panel-info,
   &.panel-warning,
   &.panel-danger {
     .panel-heading {
-      p, div, span {
+      p,
+      div,
+      span {
         color: rgba(255, 255, 255, 0.8);
       }
     }
@@ -149,7 +154,8 @@ $panel-heading-font-size: 16px;
   }
 }
 
-.panel-group .panel {
+.panel-group .panel,
+.postbox {
   .panel-heading {
     border-bottom: 1px solid #ddd;
   }
@@ -172,6 +178,6 @@ $panel-heading-font-size: 16px;
 }
 
 /*
-.panel-group .panel {
+.panel-group .panel, .postbox{
   border-radius: 0;
 }*/

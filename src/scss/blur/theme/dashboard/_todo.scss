@@ -5,7 +5,8 @@ input.task-todo {
 ul.todo-list {
   margin: 0;
   padding: 0;
-  .placeholder, .ui-sortable-placeholder {
+  .placeholder,
+  .ui-sortable-placeholder {
   }
   li {
     margin: 0 0 -1px 0;
@@ -63,7 +64,7 @@ ul.todo-list {
       label.todo-checkbox > span {
         &:before {
           color: white;
-          content: '\f10c';
+          content: "\f10c";
           margin-right: 20px;
           transition: margin-right 0.1s ease-out;
           transition-delay: 0.2s;
@@ -71,7 +72,7 @@ ul.todo-list {
         }
       }
       label.todo-checkbox > input:checked + span:before {
-        content: '\f00c';
+        content: "\f00c";
       }
     }
   }
@@ -98,7 +99,8 @@ label.todo-checkbox {
 }
 
 .task-todo-container.transparent {
-  .todo-panel.panel {
+  .todo-panel.panel,
+  .postbox {
     color: white;
     opacity: 0.9;
   }
@@ -130,21 +132,25 @@ label.todo-checkbox {
       border: none;
       font-weight: $font-light;
 
-      .blur-container{
+      .blur-container {
         height: 40px;
         position: absolute;
-        width: calc(100% + 40px);;
+        width: calc(100% + 40px);
         top: 0;
         left: -25px;
         overflow-y: hidden;
       }
-      &:hover{
-        .blur-container{
+      &:hover {
+        .blur-container {
           box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.12);
         }
         .blur-box {
           height: 100%;
-          background: linear-gradient(to right, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0) 100%);
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 100%
+          );
           -webkit-filter: blur(3px);
         }
       }
@@ -164,7 +170,7 @@ label.todo-checkbox {
         &:before {
           position: absolute;
           color: $default-text;
-          content: '\f10c';
+          content: "\f10c";
           float: none;
           margin-right: 6px;
           transition: none;
@@ -173,18 +179,17 @@ label.todo-checkbox {
       &.checked {
         label.todo-checkbox > span {
           &:before {
-            content: '\f00c';
+            content: "\f00c";
           }
         }
       }
     }
   }
 
-  .box-shadow-border{
+  .box-shadow-border {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.12);
     width: calc(100% + 44px);
     margin-left: -22px;
   }
-
 }
