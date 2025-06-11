@@ -2,7 +2,7 @@ require("dotenv").config();
 const pugPHPFilter = require("pug-php-filter");
 
 var srcDir = "./src/";
-var buildDir = "./public_html/wp-content/themes/${CLIENT_NAME}/";
+var buildDir = "./public_html/wp-content/themes/" + process.env.CLIENT_NAME + "/";
 
 var jsSrcDir = srcDir + "js/";
 var jsBuildDir = buildDir + "js/";
