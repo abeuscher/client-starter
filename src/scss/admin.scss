@@ -9,6 +9,7 @@ body.wp-admin {
   --bg-primary: #f6f6f6;
   --bg-secondary: #0b6803;
   --bg-tertiary: #0e3d0a;
+  --bg-highlight: #209e22;
   --accent: #209e91;
   --text: #666;
   --text-muted: #999;
@@ -45,6 +46,11 @@ body.wp-admin {
 #adminmenuwrap {
   background: var(--bg-tertiary);
 }
+.wp-has-current {
+  background: var(--bg-highlight);
+  color: var(--text-menu);
+}
+
 .wrap,
 .theme-wrap {
   animation: contentFadeIn 0.5s ease;
