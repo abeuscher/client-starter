@@ -9,9 +9,9 @@
   function enqueue_custom_admin_styles($hook) {
     wp_enqueue_style(
       'custom-admin-styles',
-      get_template_directory_uri() . '/assets/css/admin.css', // Adjust path as needed
+      get_template_directory_uri() . '/admin.css', // Adjust path as needed
       array(),
-      filemtime(get_template_directory() . '/assets/css/admin.css') // Cache busting
+      filemtime(get_template_directory() . '/admin.css') // Cache busting
     );
   }
   add_action('admin_enqueue_scripts', 'enqueue_custom_admin_styles');
