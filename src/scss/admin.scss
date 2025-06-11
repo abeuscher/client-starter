@@ -1,90 +1,149 @@
 // Import color scheme FIRST
 @import "blur/theme/conf/colorScheme/blur";
-
-// Then import variables (which now has access to $primary)
 @import "blur/theme/conf/variables";
-
-// Then mixins
 @import "blur/theme/conf/mixins";
-
-// Then layout
 @import "blur/theme/layout";
 
-// Key Blur Admin variables and styling
+// More dramatic Blur Admin styling
 .wp-admin {
-  // Apply Blur Admin's main background and typography
-  background: #f0f3f4; // Blur Admin's body background
-  font-family: "Roboto", sans-serif;
+  // Apply Blur Admin's signature background
+  background: $body-bg;
+  font-family: $font-family;
 
-  // Admin sidebar styling
+  // MUCH more dramatic sidebar
   #adminmenu {
-    background: #2f353a; // Blur Admin sidebar color
+    background: $sidebar; // This should be a dark translucent
     border-right: none;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
 
     li.menu-top {
       border: none;
+      margin: 2px 8px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
 
       .wp-menu-name {
-        color: #ddd;
-        font-weight: 300;
+        color: $sidebar-text;
+        font-weight: $font-light;
+        font-size: 14px;
       }
 
       &:hover,
       &.current {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateX(4px);
       }
 
       .wp-menu-arrow {
-        color: #ddd;
+        color: $sidebar-text;
       }
+
+      .wp-menu-image:before {
+        color: $sidebar-text;
+        opacity: 0.8;
+      }
+    }
+
+    // Submenu styling
+    .wp-submenu {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      border-radius: 4px;
+      margin: 4px;
+
+      li a {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 8px 16px;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
+        }
+      }
+    }
+  }
+
+  // Top admin bar with blur effect
+  #wpadminbar {
+    background: rgba(47, 53, 58, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .ab-item {
+      color: $sidebar-text;
+    }
+
+    .ab-top-menu > li:hover > .ab-item {
+      background: rgba(255, 255, 255, 0.15);
     }
   }
 
   // Main content area
   .wrap {
     background: transparent;
+    padding: 30px 20px;
 
     h1,
     h2 {
-      color: #666;
-      font-weight: 300;
-      margin-bottom: 20px;
+      color: $default-text;
+      font-weight: $font-light;
+      margin-bottom: 25px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 28px;
     }
   }
 
-  // Dashboard widgets / postboxes (Blur Admin panel styling)
+  // MUCH more dramatic dashboard widgets
   .postbox {
-    background: rgba(255, 255, 255, 0.95);
+    background: $default; // Should be translucent dark
     border: none;
-    border-radius: 5px;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.25);
-    margin-bottom: 24px;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    margin-bottom: 30px;
     position: relative;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    }
 
     .postbox-header {
-      background: transparent;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      padding: 15px 22px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      border-bottom: 1px solid $border-light;
+      padding: 20px 25px;
+      border-radius: 8px 8px 0 0;
 
       h2 {
-        color: #666;
-        font-weight: 300;
-        font-size: 16px;
+        color: $default-text;
+        font-weight: $font-light;
+        font-size: 18px;
         margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       }
     }
 
     .inside {
-      padding: 15px 22px;
+      padding: 25px;
     }
   }
 
-  // Form elements
+  // Form styling with blur effects
   .form-table {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+
     th {
-      color: #666;
-      font-weight: 300;
+      color: $default-text;
+      font-weight: $font-light;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
 
     input[type="text"],
@@ -92,49 +151,66 @@
     input[type="password"],
     textarea,
     select {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 3px;
-      color: #666;
-      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      color: $default-text;
+      padding: 10px 15px;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
 
       &:focus {
-        border-color: #209e91; // Blur Admin primary color
-        box-shadow: 0 0 5px rgba(32, 158, 145, 0.3);
+        border-color: $primary;
+        box-shadow: 0 0 15px rgba($primary, 0.4);
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.6);
       }
     }
   }
 
-  // Buttons
+  // Buttons with gradient and effects
   .button {
-    border-radius: 3px;
-    font-weight: 300;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    transition: all 0.2s ease;
+    border-radius: 6px;
+    font-weight: $font-light;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 
     &.button-primary {
-      background: #209e91;
-      border-color: #209e91;
+      background: linear-gradient(135deg, $primary, $primary-dark);
+      border-color: $primary;
       color: white;
+      box-shadow: 0 4px 15px rgba($primary, 0.3);
 
       &:hover {
-        background: #1a8275;
-        border-color: #1a8275;
+        background: linear-gradient(135deg, $primary-light, $primary);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba($primary, 0.4);
+      }
+    }
+
+    &:not(.button-primary) {
+      background: rgba(255, 255, 255, 0.1);
+      color: $default-text;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-1px);
       }
     }
   }
 
-  // Top admin bar
-  #wpadminbar {
-    background: #2f353a;
-
-    .ab-item {
-      color: #ddd;
-    }
-
-    .ab-top-menu > li:hover > .ab-item {
-      background: rgba(255, 255, 255, 0.1);
-    }
+  // Add some blur effects to notices
+  .notice {
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+    border-left-width: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
 
   // Meta boxes holder
@@ -143,6 +219,30 @@
       .meta-box-sortables {
         min-height: auto;
       }
+    }
+  }
+
+  // Table styling
+  .wp-list-table {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+
+    th {
+      background: rgba(255, 255, 255, 0.15);
+      color: $default-text;
+      font-weight: $font-light;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    td {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.08);
     }
   }
 }
