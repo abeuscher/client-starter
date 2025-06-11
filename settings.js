@@ -1,3 +1,4 @@
+.require("dotenv").config();
 const pugPHPFilter = require("pug-php-filter");
 
 var srcDir = "./src/";
