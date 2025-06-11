@@ -11,6 +11,7 @@ body.wp-admin {
   --accent: #209e91;
   --text: #666;
   --text-muted: #999;
+  --text-menu: #d7d6d6;
 
   background: var(--bg-primary);
   color: var(--text);
@@ -22,8 +23,7 @@ body.wp-admin {
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 
   a {
-    color: var(--text);
-    transition: all 0.2s ease;
+    color: var(--text-menu);
 
     &:hover {
       color: var(--accent);
