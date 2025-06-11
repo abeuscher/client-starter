@@ -2,7 +2,8 @@ $sidebar-width: 180px;
 $angle-left: "\f100";
 $angle-right: "\f101";
 
-.al-sidebar {
+.al-sidebar,
+#adminmenumain {
   width: $sidebar-width;
   top: $top-height;
   left: 0;
@@ -46,7 +47,8 @@ $angle-right: "\f101";
   }
 }
 
-.al-sidebar-list-item, .ba-sidebar-sublist-item {
+.al-sidebar-list-item,
+.ba-sidebar-sublist-item {
   &.ba-sidebar-item-expanded {
     > .al-sidebar-list-link {
       b {
@@ -101,19 +103,22 @@ a.al-sidebar-list-link {
   }
 }
 
-.slimScrollBar, .slimScrollRail {
+.slimScrollBar,
+.slimScrollRail {
   border-radius: 0px !important;
   width: 4px !important;
   left: 176px;
 }
 
 @mixin layout-collapsed() {
-  .al-main {
+  .al-main,
+  #wpbody {
     margin-left: 50px;
   }
 
-  .al-footer {
-    padding-left: 83px
+  .al-footer,
+  #wpfooter {
+    padding-left: 83px;
   }
 }
 
@@ -151,7 +156,6 @@ a.al-sidebar-list-link {
         color: $sidebar-text;
       }
     }
-
   }
 }
 
@@ -159,7 +163,7 @@ a.al-sidebar-list-link {
   @include default-sublist();
 }
 
-.sidebar-hover-elem{
+.sidebar-hover-elem {
   width: 4px;
   background: $primary;
   position: absolute;
@@ -177,10 +181,12 @@ a.al-sidebar-list-link {
 }
 
 @mixin sidebar-collapsed() {
-  .al-sidebar {
+  .al-sidebar,
+  #adminmenumain {
     width: 52px;
 
-    .fa-angle-down, .fa-angle-up {
+    .fa-angle-down,
+    .fa-angle-up {
       opacity: 0;
     }
 
@@ -212,28 +218,33 @@ a.al-sidebar-list-link {
       }
     }
 
-    .sidebar-hover-elem, .sidebar-select-elem {
+    .sidebar-hover-elem,
+    .sidebar-select-elem {
       left: 48px;
     }
   }
 }
 
 @mixin sidebar-hidden() {
-  .al-sidebar {
+  .al-sidebar,
+  #adminmenumain {
     width: 0;
   }
-  .sidebar-hover-elem, .sidebar-select-elem {
+  .sidebar-hover-elem,
+  .sidebar-select-elem {
     display: none;
   }
 }
 
 @mixin sidebar-overlap() {
-  .al-sidebar {
+  .al-sidebar,
+  #adminmenumain {
     width: $sidebar-width;
     @include bg-translucent-dark(0.75);
     transition: width 0.5s ease;
 
-    .fa-angle-down, .fa-angle-up {
+    .fa-angle-down,
+    .fa-angle-up {
       opacity: 1;
     }
 
@@ -247,7 +258,8 @@ a.al-sidebar-list-link {
       transition: none;
     }
 
-    .sidebar-hover-elem, .sidebar-select-elem {
+    .sidebar-hover-elem,
+    .sidebar-select-elem {
       left: $sidebar-width - 4;
       transition: left 0.5s ease;
     }
@@ -278,10 +290,12 @@ a.al-sidebar-list-link {
   .menu-collapsed {
     @include sidebar-hidden();
   }
-  .al-main {
+  .al-main,
+  #wpbody {
     margin-left: 0;
   }
-  .al-footer {
+  .al-footer,
+  #wpfooter {
     padding-left: 0;
   }
 }
